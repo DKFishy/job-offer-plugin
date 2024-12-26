@@ -44,8 +44,6 @@ add_action('init', 'job_offers_manager_taxonomies');
 function job_offers_filter_form() {
     $locations = get_terms(array('taxonomy' => 'location', 'hide_empty' => false));
     $technologies = get_terms(array('taxonomy' => 'technology', 'hide_empty' => false));
-	
-	$total_offers = count_job_offers();
 
     ob_start();
     ?>
@@ -89,8 +87,6 @@ function job_offers_filter_form() {
 
 function job_offers_manager_list() {
     $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
-
-	$total_offers = count_job_offers($filters);
 	
     $args = array(
         'post_type' => 'job_offer',
@@ -123,7 +119,6 @@ function job_offers_manager_list() {
     ob_start();
     ?>
     <div id="job-offers-container">
-		<p id="job-offer-count"><?php echo $total_offers; ?> offers found</p>
         <?php
         if ($job_offers->have_posts()) {
             echo '<ul>';
@@ -197,35 +192,6 @@ function job_offers_manager_list() {
     return ob_get_clean();
 }
 
-function count_job_offers($filters = []) {
-    $args = array(
-        'post_type' => 'job_offer',
-        'posts_per_page' => -1, // Get all posts
-    );
-
-    if (!empty($filters['job_title'])) {
-        $args['s'] = sanitize_text_field($filters['job_title']);
-    }
-
-    if (!empty($filters['job_locations'])) {
-        $args['tax_query'][] = array(
-            'taxonomy' => 'location',
-            'field' => 'slug',
-            'terms' => array_map('sanitize_text_field', $filters['job_locations']),
-        );
-    }
-
-    if (!empty($filters['job_technologies'])) {
-        $args['tax_query'][] = array(
-            'taxonomy' => 'technology',
-            'field' => 'slug',
-            'terms' => array_map('sanitize_text_field', $filters['job_technologies']),
-        );
-    }
-
-    $job_offers = new WP_Query($args);
-    return $job_offers->found_posts; // Return the count of posts found
-}
 
 function job_offers_shortcode() {
     ob_start();

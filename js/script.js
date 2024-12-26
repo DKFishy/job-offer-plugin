@@ -20,7 +20,7 @@ jQuery(document).ready(function ($) {
     });
 
     // Handle collapsible content with smooth transition
-    $(document).on('click', '.collapsible ', function () {
+        $(document).on('click', '.collapsible span', function () {
         const content = $(this).next('.content');
         const icon = $(this).find('i');
         content.stop(true, true).slideToggle(200); // Use stop() to prevent animation queue buildup
