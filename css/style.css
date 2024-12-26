@@ -1,0 +1,95 @@
+/* Container for the filter and job listings */
+.job-offers-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px;
+	max-width: 70%;
+}
+
+/* Filter section */
+.filter-section {
+    width: 30%;
+    background-color: white;
+    padding: 30px 40px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Job listings section */
+#job-results {
+    width: 65%;
+    background-color: white;
+    padding: 30px 40px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Collapsible content */
+.collapsible h3 {
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.collapsible .content {
+    display: none;
+    padding: 0 0 10px 0;
+}
+
+.collapsible.active .content {
+    display: block;
+}
+
+/* Other styling for form elements */
+#job-filter-form input[type="text"],
+#job-filter-form button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#job-filter-form button {
+    background-color: #0073aa;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#job-filter-form button:hover {
+    background-color: #005f8d;
+}
+
+/* Job listing items */
+#job-offers-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#job-offers-container li {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#job-offers-container li strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#job-offers-container .button {
+    margin-right: 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #0073aa;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+#job-offers-container .button:hover {
+    background-color: #005f8d;
+}

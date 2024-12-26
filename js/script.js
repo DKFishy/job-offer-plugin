@@ -20,6 +20,11 @@ jQuery(document).ready(function ($) {
         submitFilterForm(1); // Always start from page 1 when clearing filters
     });
 
+    // Handle collapsible content
+    $(document).on('click', '.collapsible h3', function () {
+        $(this).parent().toggleClass('active');
+    });
+
     function submitFilterForm(paged) {
         const formData = $('#job-filter-form').serialize() + '&paged=' + paged;
 
@@ -27,7 +32,7 @@ jQuery(document).ready(function ($) {
             url: ajax_object.ajax_url, // AJAX URL from WordPress
             type: 'POST',
             data: {
-                action: 'job_offers_pagination',
+                action: 'job_offers_build',
                 form_data: formData,
             },
             success: function (response) {
