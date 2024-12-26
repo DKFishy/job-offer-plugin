@@ -48,9 +48,7 @@ function job_offers_filter_form() {
     ob_start();
     ?>
     <div class="filter-section">
-        <form id="job-filter-form">
-            <!--<input type="text" id="job-title" name="job_title" placeholder="Job Title" value="<?php echo isset($_POST['job_title']) ? esc_attr($_POST['job_title']) : ''; ?>">-->
-			
+        <form id="job-filter-form">	
 			<div class="filter-top">
 				<span style="font-weight: bold;">Filtry</span>
 				<a href="#" id="clear-filters" class="text-only">Resetuj</a>
@@ -189,14 +187,45 @@ function job_offers_manager_list() {
         ?>
     </div>
     <?php
-    return ob_get_clean();
+    $output = ob_get_clean();
+	$total_count = job_offers_count();
+	return $output;
 }
 
+function job_offers_count() {
+    $args = array('post_type' => 'job_offer', 'posts_per_page' => -1);
+
+    // Include filters
+    if (isset($_POST['job_locations']) && !empty($_POST['job_locations'])) {
+        $args['tax_query'][] = array(
+            'taxonomy' => 'location',
+            'field' => 'slug',
+            'terms' => array_map('sanitize_text_field', $_POST['job_locations']),
+        );
+    }
+
+    if (isset($_POST['job_technologies']) && !empty($_POST['job_technologies'])) {
+        $args['tax_query'][] = array(
+            'taxonomy' => 'technology',
+            'field' => 'slug',
+            'terms' => array_map('sanitize_text_field', $_POST['job_technologies']),
+        );
+    }
+
+    $query = new WP_Query($args);
+    $count = $query->found_posts;
+    wp_reset_postdata();
+
+    return $count;
+}
 
 function job_offers_shortcode() {
     ob_start();
     ?>
-    <div class="job-offers-container">
+    <div class="job-offers-main">
+        <div id="job-offer-counter" class="full-width-counter">
+            Total Offers: <span id="job-offer-count"><?php echo job_offers_count(); ?></span>
+        </div>
         <?php echo job_offers_filter_form(); ?>
         <div id="job-results"><?php echo job_offers_manager_list(); ?></div>
     </div>
@@ -227,11 +256,18 @@ add_action('wp_enqueue_scripts', 'enqueue_dashicons');
 
 
 function job_offers_build() {
-	parse_str($_POST['form_data'], $form_data);
-	$_POST = $form_data; // Populate the $_POST array with the form data
+    parse_str($_POST['form_data'], $form_data);
+    $_POST = $form_data;
 
-    	echo job_offers_manager_list();
-    	wp_die();
+    $offers_list_html = job_offers_manager_list();
+    $total_count = job_offers_count();
+
+    $response = array(
+        'html' => $offers_list_html,
+        'count' => $total_count,
+    );
+    wp_send_json($response);
 }
+
 add_action('wp_ajax_job_offers_build', 'job_offers_build');
 add_action('wp_ajax_nopriv_job_offers_build', 'job_offers_build');

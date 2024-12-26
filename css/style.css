@@ -1,28 +1,34 @@
-.entry-content { /*tylko do celów testowych*/
-	background-color: grey; 
-}
-
-.job-offers-container {
+.job-offers-main {
     display: flex;
+	flex-wrap: wrap;
     justify-content: space-between;
 	max-width: 70%;
 	font-family: 'Open Sans', sans-serif !important;
 }
 
+#job-offer-counter {
+	flex-basis: 100%;
+	box-sizing: border-box;
+	justify-content: start;
+	align-items: flex-end;
+	display: flex;
+	padding-top: 30px; 
+	padding-bottom: 10px;
+	padding-left: 15px;
+	font-weight: bold;
+	font-size: 18px;
+}
+
 .filter-section {
     width: 30%;
     background-color: white;
-    padding: 30px 40px;
+    padding: 15px 40px;
     box-sizing: border-box;
     border-radius: 5px;
 	height: fit-content;
     transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
     overflow: hidden;
-	margin-top: 17px;
-}
-
-.filter-section, #job-results {
-	margin-top: 50px;
+	margin-top: 16.8px;
 }
 
 #job-filter-form .collapsible{
@@ -35,6 +41,7 @@
     width: 65%;
     background: none;
     box-sizing: border-box;
+	align-items: stretch;
 }
 
 .filter-top{
@@ -72,7 +79,6 @@
     display: block;
 }
 
-/* Other styling for form elements */
 #job-filter-form input[type="text"],
 #job-filter-form button {
     width: 100%;
@@ -96,7 +102,6 @@
     background-color: #005f8d;
 }
 
-/* Job listing items */
 #job-offers-container ul {
     list-style-type: none;
     padding: 0;
@@ -113,23 +118,28 @@
 #job-offers-container li strong {
     display: block;
     margin-bottom: 20px;
+	font-size: 22px;
 }
 
 #job-offers-container .offer-description{
 	display: block;
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 	margin-top: 20px;
+	font-size: 15px;
 }
 
 #job-offers-container .offer-tech-loc{
 	display: block;
 	margin-bottom: 20px;
 	margin-top: 20px;
+	font-size: 13px;
+	font-weight: bold;
 }
 
 #job-offers-container .offer-buttons{
 	display: block;
-	margin-top: 30px;
+	margin-top: 40px;
+	margin-bottom: 10px;
 }
 
 #job-offers-container .button {
@@ -154,6 +164,7 @@
 #pagination {
     text-align: center;
     margin-top: 20px;
+	margin-bottom: 30px;
 }
 
 #pagination .page-numbers, #pagination .dots {
